@@ -60,8 +60,8 @@ autocmd('CmdlineChanged', {
 		local cmdline = vim.fn.getcmdline()
 		if cmdtype == '/'
 			or cmdtype == '?'
-			or cmdline:find("g[lobal]*!?[^%a]")
-			or cmdline:find("v[global]*[^%a]")
+			or cmdline:find("g.*!?[^%a]")
+			or cmdline:find("v.*[^%a]")
 		then
 			vim.o.hlsearch = true
 		else

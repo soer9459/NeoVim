@@ -11,29 +11,6 @@ local function _Truncate()
 	return '%<'
 end
 
-local modes = {
-	["n"] = "NORMAL",
-	["no"] = "NORMAL",
-	["i"] = "INSERT",
-	["ic"] = "INSERT",
-	["v"] = "VISUAL",
-	["V"] = "V-LINE",
-	[""] = "V-BLOCK",
-	["s"] = "SELECT",
-	["S"] = "S-LINE",
-	[""] = "S-BLOCK",
-	["R"] = "REPLACE",
-	["Rv"] = "V-REPLACE",
-	["c"] = "COMMAND",
-	["cv"] = "VIM EX",
-	["ce"] = "EX",
-	["r"] = "PROMPT",
-	["rm"] = "MOAR",
-	["r?"] = "CONFIRM",
-	["!"] = "SHELL",
-	["t"] = "TERMINAL",
-}
-
 local function ModeColor()
 	local current_mode = vim.api.nvim_get_mode().mode
 	local higroup = "%#StatuslineTextMain#"
@@ -54,8 +31,30 @@ local function ModeColor()
 end
 
 local function Mode()
+	local modes = {
+		["n"] = "NORMAL",
+		["no"] = "NORMAL",
+		["i"] = "INSERT",
+		["ic"] = "INSERT",
+		["v"] = "VISUAL",
+		["V"] = "V-LINE",
+		[""] = "V-BLOCK",
+		["s"] = "SELECT",
+		["S"] = "S-LINE",
+		[""] = "S-BLOCK",
+		["R"] = "REPLACE",
+		["Rv"] = "V-REPLACE",
+		["c"] = "COMMAND",
+		["cv"] = "VIM EX",
+		["ce"] = "EX",
+		["r"] = "PROMPT",
+		["rm"] = "MOAR",
+		["r?"] = "CONFIRM",
+		["!"] = "SHELL",
+		["t"] = "TERMINAL",
+	}
 	local current_mode = vim.api.nvim_get_mode().mode
-	return ModeColor() .. ' ' .. modes[current_mode] .. ' '
+	return ModeColor() .. '  ' .. modes[current_mode] .. ' ' .. _Spacer(0)
 end
 
 local function Path()
@@ -148,10 +147,10 @@ local function Diagnostics()
 	return error .. warning .. info .. hint .. _Spacer(diag_count)
 end
 
-local function CursorPosition()
+local function Percentage()
 	local current_line = vim.fn.line('.')
 	local total_lines = vim.fn.line('$')
-	local percentage = vim.fn.floor(current_line / total_lines * 100) .. '%%'
+	local percentage = vim.fn.floor(current_line / total_lines * 100)
 	local content = ''
 	local higroupmain = '%#StatuslineTextMain#'
 	local higroupaccent = '%#StatuslineTextAccent#'
@@ -159,11 +158,20 @@ local function CursorPosition()
 		content = 'Top'
 	elseif current_line == total_lines then
 		content = 'End'
+	elseif percentage < 10 then
+		content = higroupaccent .. '·' .. higroupmain .. percentage .. '%%'
 	else
-		content = percentage
+		content = percentage .. '%%'
 	end
-	return higroupmain .. current_line .. higroupaccent .. ":" .. higroupmain .. total_lines .. _Spacer(1) ..
-		higroupaccent .. "(" .. higroupmain .. content  .. higroupaccent .. ')' .. _Spacer(2)
+	return higroupaccent .. '≡ ' .. higroupmain .. content .. _Spacer(2)
+end
+
+local function CursorPosition()
+	local current_line = vim.fn.line('.')
+	local total_lines = vim.fn.line('$')
+	local higroupmain = '%#StatuslineTextMain#'
+	local higroupaccent = '%#StatuslineTextAccent#'
+	return higroupmain .. current_line .. higroupaccent .. ":" .. higroupmain .. total_lines .. _Spacer(2)
 end
 
 local function Filetype()
@@ -175,7 +183,6 @@ local function Filetype()
 		return higroup .. filetype .. _Spacer(2)
 	end
 end
-
 Statusline = function()
 	return table.concat {
 		Mode(),
@@ -185,10 +192,11 @@ Statusline = function()
 		Harpoon(),
 		_Spacer(2),
 		_RightAlign(),
-		Diagnostics(),
-		LspStatus(),
-		CursorPosition(),
-		Filetype(),
+		-- Diagnostics(),
+		-- LspStatus(),
+		-- CursorPosition(),
+		Percentage(),
+		-- Filetype(),
 		_Truncate(),
 	}
 end

@@ -9,10 +9,9 @@ return {
 	config = function()
 		local ts = require('telescope')
 		local ts_undo = require('telescope-undo.actions')
-		local h_percentage = 0.85
-		local w_percentage = 0.85
+		local h_pct = 0.85
+		local w_pct = 0.85
 		local w_limit = 80
-		--vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
 		local standard_setup = {
 			borderchars = {
 				--           N    E    S    W   NW   NE   SE   SW
@@ -27,10 +26,10 @@ return {
 					mirror = true,
 					prompt_position = 'top',
 					width = function(_, cols, _)
-						return math.min( math.floor( w_percentage * cols ), w_limit )
+						return math.min( math.floor( w_pct * cols ), w_limit )
 					end,
 					height = function(_, _, rows)
-						return math.floor( rows * h_percentage )
+						return math.floor( rows * h_pct )
 					end,
 					preview_cutoff = 10,
 					preview_height = 0.4,
@@ -74,6 +73,43 @@ return {
 				},
 			},
 		}
+		local undo_setup = {
+			borderchars = {
+				--           N    E    S    W   NW   NE   SE   SW
+				prompt =  { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+				results = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+				preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+			},
+			preview = { hide_on_startup = false },
+			layout_strategy = 'flex', -- HORIZONTAL, VERTICAL, FLEX
+			layout_config = {
+				flex = { flip_columns = 100 },
+				horizontal = {
+					mirror = false,
+					prompt_position = 'top',
+					width = function(_, cols, _)
+						return math.floor(cols * w_pct)
+					end,
+					height = function(_, _, rows)
+						return math.floor(rows * h_pct)
+					end,
+					preview_cutoff = 10,
+					preview_width = 0.6,
+				},
+				vertical = {
+					mirror = true,
+					prompt_position = 'top',
+					width = function(_, cols, _)
+						return math.floor(cols * w_pct)
+					end,
+					height = function(_, _, rows)
+						return math.floor(rows * h_pct)
+					end,
+					preview_cutoff = 10,
+					preview_height = 0.6,
+				},
+			},
+		}
 		ts.setup {
 			defaults = vim.tbl_extend('error', standard_setup, {
 				results_title = '',
@@ -104,7 +140,7 @@ return {
 			extensions = {
 				file_browser = {
 					hijack_netrw = true,
-					initial_mode = 'insert',
+					initial_mode = 'normal',
 					hide_parent_dir = false,
 					hidden = {
 						file_browser = false,
@@ -125,9 +161,10 @@ return {
 						},
 					}
 				},
-				undo = {
+				undo = vim.tbl_extend('error', undo_setup, {
+					diff_context_lines = 5,
 					preview_title = "Difference",
-					preview = { hide_on_startup = false },
+					--preview = { hide_on_startup = false },
 					mappings = {
 						i = {
 							['<cr>'] = ts_undo.restore,
@@ -141,7 +178,7 @@ return {
 							['yd'] = ts_undo.yank_deletions,
 						},
 					},
-				}
+				})
 			}
 		}
 		ts.load_extension('file_browser')

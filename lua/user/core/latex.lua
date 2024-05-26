@@ -1,33 +1,71 @@
--- SOMETHING WRONG WITH PATHS. File in Contract Theory Notes folder does not compile
+vim.api.nvim_command('command! LatexCompile lua LatexCompile()')
+vim.api.nvim_command('command! LatexClean lua LatexClean()')
+vim.api.nvim_command('command! LatexView lua LatexView()')
+vim.api.nvim_command('command! SymPy lua SymPy()')
 
 function LatexCompile()
-	local filename = vim.fn.expand("%:p")
-	local output = vim.fn.expand("%:p:h")
-	local command = "latexmk -pdf -outdir=" .. output .. " " .. filename
-	vim.fn.system(command)
-	print("Compiling LaTeX document")
+	if vim.bo.filetype ~= 'tex' then
+		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})
+	end
+	local filename = vim.fn.shellescape(vim.fn.expand("%:p"))
+	local output = vim.fn.shellescape(vim.fn.expand("%:p:h"))
+	local command = "latexmk -halt-on-error -pdf -outdir=" .. output .. " " .. filename
+	vim.api.nvim_echo({{'↻ Compiling LaTeX document', 'DiagnosticWarn'}}, true, {})
+	vim.fn.jobstart(command, {
+		detach = true,
+		on_exit = function(_, exit_code, _)
+			if exit_code == 0 then
+				vim.api.nvim_echo({{'✔ LaTeX compilation successful!', 'DiagnosticOk'}}, true, {})
+			else
+				vim.api.nvim_echo({{'✘ Error compiling LaTeX document!. Exit Code: ' .. exit_code, 'DiagnosticError'}}, true, {})
+			end
+		end
+	})
 end
-vim.api.nvim_command('command! LatexCompile lua LatexCompile()')
 
 function LatexClean()
-	local filename = vim.fn.expand("%:p")
-	local output = vim.fn.expand("%:p:h")
+	if vim.bo.filetype ~= 'tex' then
+		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})
+	end
+	local filename = vim.fn.shellescape(vim.fn.expand("%:p"))
+	local output = vim.fn.shellescape(vim.fn.expand("%:p:h"))
 	local command = "latexmk -c -outdir=" .. output .. " " .. filename
-	vim.fn.system(command)
-	print("Cleaning LaTeX files")
+	vim.api.nvim_echo({{'Cleaning LaTeX files', 'DiagnosticWarn'}}, true, {})
+	vim.fn.jobstart(command, {
+		detach = true,
+		on_exit = function(_, exit_code, _)
+			if exit_code == 0 then
+				vim.api.nvim_echo({{'✔ LaTeX cleaning successful!', 'DiagnosticOk'}}, true, {})
+			else
+				vim.api.nvim_echo({{'✘ Error cleaning LaTeX files!. Exit Code: ' .. exit_code, 'DiagnosticError'}}, true, {})
+			end
+		end
+	})
 end
-vim.api.nvim_command('command! LatexClean lua LatexClean()')
-
-function LatexCompileClean()
-	LatexCompile()
-	LatexClean()
-end
-vim.api.nvim_command('command! LatexCompileClean lua LatexCompileClean()')
 
 function LatexView()
-	local filename = vim.fn.expand("%:p:r")
-	local command = "zathura " .. filename .. ".pdf &"
-	vim.fn.system(command)
-	print("Opening PDF")
+	if vim.bo.filetype ~= 'tex' then
+		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})
+	end
+	local filename = vim.fn.shellescape(vim.fn.expand("%:p:r") .. ".pdf" )
+	local command = "zathura " .. filename .. " &"
+	vim.api.nvim_echo({{'Opening PDF', 'DiagnosticWarn'}}, true, {})
+	vim.fn.jobstart(command, {
+		detach = true,
+		on_exit = function(_, exit_code, _)
+			if exit_code == 0 then
+				vim.api.nvim_echo({{'✔ PDF opened!', 'DiagnosticOk'}}, true, {})
+			else
+				vim.api.nvim_echo({{'✘ Error opening PDF file!. Exit Code: ' .. exit_code, 'DiagnosticError'}}, true, {})
+			end
+		end
+	})
 end
-vim.api.nvim_command('command! LatexView lua LatexView()')
+
+function SymPy()
+	if vim.bo.filetype ~= 'tex' then
+		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})
+	end
+	local input = vim.fn.input("Enter SymPy command: ")
+	vim.cmd('read !python -c "from sympy import *; from sympy.abc import *; print(latex(' .. input .. '))"')
+end

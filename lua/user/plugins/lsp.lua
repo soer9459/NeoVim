@@ -13,7 +13,7 @@ return {
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup {
-						capabilities = capabilities
+						capabilities = capabilities,
 					}
 				end,
 				["lua_ls"] = function()
@@ -24,7 +24,7 @@ return {
 								runtime = { version = "Lua 5.1" },
 								diagnostics = {
 									globals = { "vim", "bit" },
-								}
+								},
 							}
 						}
 					}

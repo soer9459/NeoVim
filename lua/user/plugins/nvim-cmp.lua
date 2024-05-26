@@ -58,7 +58,7 @@ return {
 		}
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline(),
-			completion = { autocomplete = false },
+			completion = { autocomplete = false, },
 			sources = {
 				{ name = 'cmdline' },
 			},
@@ -70,7 +70,5 @@ return {
 				{ name = 'buffer' },
 			},
 		})
-		-- REMAP DIFFERENTLY:
-		vim.api.nvim_set_keymap('i', '<c-h>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', { noremap = true, silent = true })
 	end
 }
