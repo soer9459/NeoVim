@@ -18,6 +18,7 @@ return {
 			snippet = {
 				expand = function(args)
 					require('luasnip').lsp_expand(args.body)
+					-- vim.snippet.expand(args.body)
 				end
 			},
 			completion = { completeopt = 'menu, menuone, noinsert, noselect' },
@@ -57,15 +58,15 @@ return {
 			}
 		}
 		cmp.setup.cmdline(':', {
-			mapping = cmp.mapping.preset.cmdline(),
-			completion = { autocomplete = false, },
+			mapping = cmp.mapping.preset.cmdline{ },
+			completion = { autocomplete = false },
 			sources = {
 				{ name = 'cmdline' },
 			},
 		})
 		cmp.setup.cmdline({ '/', '?' }, {
 			mapping = cmp.mapping.preset.cmdline(),
-			completion = { autocomplete = false, },
+			completion = { autocomplete = false },
 			sources = {
 				{ name = 'buffer' },
 			},

@@ -3,7 +3,7 @@ local function _Spacer(n)
 	return '%#StatuslineTextMain#' .. spaces
 end
 
-local function _RightAlign()
+local function _Align()
 	return '%='
 end
 
@@ -13,7 +13,7 @@ end
 
 local function ModeColor()
 	local current_mode = vim.api.nvim_get_mode().mode
-	local higroup = "%#StatuslineTextMain#"
+	local higroup = "%#StatuslineModeCommand#"
 	if current_mode == "n" then
 		higroup = "%#StatuslineModeNormal#"
 	elseif current_mode == "i" or current_mode == "ic" then
@@ -52,9 +52,12 @@ local function Mode()
 		["r?"] = "CONFIRM",
 		["!"] = "SHELL",
 		["t"] = "TERMINAL",
+		["niI"] = "INS-NOR",
 	}
 	local current_mode = vim.api.nvim_get_mode().mode
-	return ModeColor() .. '  ' .. modes[current_mode] .. ' ' .. _Spacer(0)
+	-- return ModeColor() .. '  ' .. modes[current_mode] .. ' ' .. _Spacer(0)
+	return ModeColor() .. ' ' .. modes[current_mode] .. ' ' .. _Spacer(0)
+	-- return current_mode
 end
 
 local function Path()
@@ -63,16 +66,20 @@ local function Path()
 	if path == '.' or path == '' then
 		return ''
 	end
-	return _Spacer(1) .. higroup .. path
+	return _Spacer(1) .. higroup .. path .. '/'
 end
 
 local function Filename()
 	local filename = vim.fn.expand('%:t')
+	local path = vim.fn.expand('%:~:.:h')
 	local higroup = '%#StatuslineTextMain#'
 	if filename == '' then
 		return _Spacer(1) .. higroup .. '[No Name]'
 	end
-	return _Spacer(1) .. higroup .. filename
+	if path == '.' then
+		return _Spacer(1) .. higroup .. filename
+	end
+	return higroup .. filename
 end
 
 local function Modified()
@@ -183,6 +190,7 @@ local function Filetype()
 		return higroup .. filetype .. _Spacer(2)
 	end
 end
+
 Statusline = function()
 	return table.concat {
 		Mode(),
@@ -191,12 +199,9 @@ Statusline = function()
 		Modified(),
 		Harpoon(),
 		_Spacer(2),
-		_RightAlign(),
-		-- Diagnostics(),
-		-- LspStatus(),
-		-- CursorPosition(),
+		_Align(),
 		Percentage(),
-		-- Filetype(),
+		Filetype(),
 		_Truncate(),
 	}
 end

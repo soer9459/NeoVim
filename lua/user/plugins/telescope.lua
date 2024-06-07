@@ -9,21 +9,20 @@ return {
 	config = function()
 		local ts = require('telescope')
 		local ts_undo = require('telescope-undo.actions')
-		local h_pct = 0.85
-		local w_pct = 0.85
-		local w_limit = 80
+		local h_pct = 0.90
+		local w_pct = 0.80
+		local w_limit = 75
 		local standard_setup = {
 			borderchars = {
-				--           N    E    S    W   NW   NE   SE   SW
-				prompt =  { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-				results = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-				preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+				--   N    E    S    W   NW   NE   SE   SW
+					'─', '│', '─', '│', '┌', '┐', '┘', '└'
 			},
 			preview = { hide_on_startup = true },
 			layout_strategy = 'vertical', -- HORIZONTAL, VERTICAL, FLEX
 			layout_config = {
 				vertical = {
 					mirror = true,
+					-- anchor = 'E',
 					prompt_position = 'top',
 					width = function(_, cols, _)
 						return math.min( math.floor( w_pct * cols ), w_limit )
@@ -37,12 +36,7 @@ return {
 			},
 		}
 		local fullscreen_setup = {
-			borderchars = {
-				--           N    E    S    W   NW   NE   SE   SW
-				prompt =  { ' ', ' ', '─', ' ', ' ', ' ', ' ', ' ' },
-				results = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-				preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-			},
+			borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
 			preview = { hide_on_startup = false },
 			layout_strategy = 'flex', -- HORIZONTAL, VERTICAL, FLEX
 			layout_config = {
@@ -51,10 +45,10 @@ return {
 					mirror = false,
 					prompt_position = 'top',
 					width = function(_, cols, _)
-						return cols
+						return math.floor(cols * w_pct)
 					end,
 					height = function(_, _, rows)
-						return rows
+						return math.floor(rows * h_pct)
 					end,
 					preview_cutoff = 10,
 					preview_width = 0.5,
@@ -63,58 +57,20 @@ return {
 					mirror = true,
 					prompt_position = 'top',
 					width = function(_, cols, _)
-						return cols
-					end,
-					height = function(_, _, rows)
-						return rows
-					end,
-					preview_cutoff = 10,
-					preview_height = 0.4,
-				},
-			},
-		}
-		local undo_setup = {
-			borderchars = {
-				--           N    E    S    W   NW   NE   SE   SW
-				prompt =  { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-				results = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-				preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-			},
-			preview = { hide_on_startup = false },
-			layout_strategy = 'flex', -- HORIZONTAL, VERTICAL, FLEX
-			layout_config = {
-				flex = { flip_columns = 100 },
-				horizontal = {
-					mirror = false,
-					prompt_position = 'top',
-					width = function(_, cols, _)
 						return math.floor(cols * w_pct)
 					end,
 					height = function(_, _, rows)
 						return math.floor(rows * h_pct)
 					end,
 					preview_cutoff = 10,
-					preview_width = 0.6,
-				},
-				vertical = {
-					mirror = true,
-					prompt_position = 'top',
-					width = function(_, cols, _)
-						return math.floor(cols * w_pct)
-					end,
-					height = function(_, _, rows)
-						return math.floor(rows * h_pct)
-					end,
-					preview_cutoff = 10,
-					preview_height = 0.6,
+					preview_height = 0.5,
 				},
 			},
 		}
 		ts.setup {
 			defaults = vim.tbl_extend('error', standard_setup, {
-				results_title = '',
+				-- results_title = '',
 				sorting_strategy = 'ascending',
-				border = { prompt = { 1, 1, 1, 1 }, results = { 1, 1, 1, 1 }, preview = { 1, 1, 1, 1 }, },
 				path_display = { "filename_first" }, -- trunctate or filename_first
 				mappings = {
 					n = {
@@ -129,16 +85,12 @@ return {
 			pickers = {
 				find_files = {
 					find_command = {
-						'fd',
-						'--type',
-						'f',
-						'-H',
-						'--strip-cwd-prefix',
+						'fd', '--type', 'f', '-H', '--strip-cwd-prefix',
 					}
 				},
 			},
 			extensions = {
-				file_browser = {
+				file_browser =  {
 					hijack_netrw = true,
 					initial_mode = 'normal',
 					hide_parent_dir = false,
@@ -146,7 +98,7 @@ return {
 						file_browser = false,
 						folder_browser = false,
 					},
-					display_stat = { },
+					display_stat = {},
 					mappings = {
 						n = {
 							['-'] = ts.extensions.file_browser.actions.goto_parent_dir,
@@ -154,17 +106,16 @@ return {
 							-- KEYBIND TO OPEN MULTI SELECTED FILES
 						},
 						i = {
-							--['<C-d>'] = ts.extensions.file_browser.actions.remove, -- Find another mappning, since C-d is down in preview
+							-- ['<C-d>'] = ts.extensions.file_browser.actions.remove, -- Find another mappning, since C-d is down in preview
 							['<C-y>'] = ts.extensions.file_browser.actions.copy,
 							['<C-r>'] = ts.extensions.file_browser.actions.rename,
-							--['<C-m>'] = ts.extensions.file_browser.actions.move, -- Find another mapping, since C-m is CR
+							-- ['<C-m>'] = ts.extensions.file_browser.actions.move, -- Find another mapping, since C-m is CR
 						},
 					}
 				},
-				undo = vim.tbl_extend('error', undo_setup, {
-					diff_context_lines = 5,
-					preview_title = "Difference",
-					--preview = { hide_on_startup = false },
+				undo = vim.tbl_extend('error', fullscreen_setup, {
+					diff_context_lines = 4,
+					preview_title = "Diff",
 					mappings = {
 						i = {
 							['<cr>'] = ts_undo.restore,

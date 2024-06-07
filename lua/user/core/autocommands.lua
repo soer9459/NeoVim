@@ -21,7 +21,7 @@ autocmd('BufWritePost', {
 		local config = vim.fn.stdpath('config')
 		local pattern = '^' .. config .. '/lua/user/theme/'
 		if string.match(buffer, pattern) then
-			vim.cmd('source ' .. config .. '/lua/user/theme/theme.lua')
+			vim.api.nvim_command('source ' .. config .. '/lua/user/theme/theme.lua')
 		end
 	end
 })
@@ -35,7 +35,7 @@ autocmd('BufWritePost', {
 		local config = vim.fn.stdpath('config')
 		local pattern = '^' .. config .. '/lua/user/core/'
 		if string.match(buffer, pattern) then
-			vim.cmd('source %')
+			vim.api.nvim_command('source %')
 		end
 	end
 })
@@ -46,7 +46,7 @@ autocmd('BufWritePre', {
 	pattern = '*',
 	callback = function()
 		local cursor = vim.api.nvim_win_get_cursor(0)
-		vim.cmd('%s/\\s\\+$//e')
+		vim.api.nvim_command('%s/\\s\\+$//e')
 		vim.api.nvim_win_set_cursor(0, cursor)
 	end
 })
@@ -60,8 +60,8 @@ autocmd('CmdlineChanged', {
 		local cmdline = vim.fn.getcmdline()
 		if cmdtype == '/'
 			or cmdtype == '?'
-			or cmdline:find("g.*!?[^%a]")
-			or cmdline:find("v.*[^%a]")
+			or cmdline:find("g[lobal]*!?[^%a]")
+			or cmdline:find("v[global]*[^%a]")
 		then
 			vim.o.hlsearch = true
 		else

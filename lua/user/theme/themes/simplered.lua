@@ -1,28 +1,29 @@
 local M = {}
 
-M.colors = {
-	-- BACKGROUND COLOR
-	BackgroundColor = BackgroundColor,
-	-- Other Colors
-	Black = '#000000',
-	Grey1 = '#080808',
-	Grey2 = '#121212', -- Not used
-	Grey3 = '#303030',
-	Grey4 = '#585858',
-	Grey5 = '#8a8a8a',
-	Grey6 = '#bcbcbc',
-	Grey7 = '#d0d0d0',
-	Grey8 = '#eeeeee',
-	Red1 = '#cc3d3d',
-	Red2 = '#d70000',
-	Red3 = '#af0000',
-	Red4 = '#870000',
-	ui = HSB(BackgroundColor, 0, 0, 0.02),
-	ui2 = HSB(BackgroundColor, 0, 0, 0.04),
-	ui3 = HSB(BackgroundColor, 0, 0, 0.15),
-}
-
+M.colors = {}
 local c = M.colors
+
+c.BG = BaseColor
+c.White = HSL(0, 100, 100)
+c.Black = HSL(0, 0, 0)
+c.Grey1 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 3)
+c.Grey2 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 7)
+c.Grey3 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 19)
+c.Grey4 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 35)
+c.Grey5 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 54)
+c.Grey6 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 74)
+c.Grey7 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 82)
+c.Grey8 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 93)
+c.Green = HSL(130, 30, 52)
+c.Magenta = HSL(280, 50, 70)
+c.Red1 = HSL(0, 58, 52)
+c.Red2 = HSL(0, 100, 42)
+c.Red3 = HSL(0, 100, 34)
+c.Red4 = HSL(0, 100, 26)
+c.ui1 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 2)
+c.ui2 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 4)
+c.ui3 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 10)
+c.ui4 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 15)
 
 M.basics = {
 	Normal = { fg = c.Grey6 },
@@ -40,7 +41,8 @@ M.basics = {
 		ModeMsg = { link = 'Normal' },
 		MoreMsg = { link = 'Normal' },
 		Question = { link = 'Normal' },
-	NormalFloat = { bg = c.ui },
+	NormalFloat = { bg = c.ui1 },
+	MsgSeparator = { link = "StatuslineTextMain" },
 	Keyword = { fg = c.Grey8, },
 		Conditional = { link = 'Keyword' },
 		Statement = { link = 'Keyword' },
@@ -54,7 +56,7 @@ M.basics = {
 		Label = { link = 'Keyword' },
 		Define = { link = 'Keyword' },
 		DiffAdd = { link = 'Keyword' },
-		diffAdded = { link = 'Keyword' },
+		diffAdded = { fg = c.Green },
 		diffCommon = { link = 'Keyword' },
 		Directory = { link = 'Keyword' },
 		PreCondit = { link = 'Keyword' },
@@ -63,19 +65,19 @@ M.basics = {
 		Special = { link = 'Keyword' },
 		SpecialChar = { link = 'Keyword' },
 		StorageClass = { link = 'Keyword' },
-	Constant = { fg = c.Grey7, },
+	Constant = { fg = c.Grey5, }, -- Grey5 default
 	String = { fg = c.Grey5, },
 		SpecialComment = { link = 'String' },
 	Whitespace = { fg = c.ui2 },
-	Comment = { fg = c.Grey4, },
-		NonText = { link = 'Comment' },
-		DiffDelete = { link = 'Comment' },
-		diffRemoved = { link = 'Comment' },
+	Comment = { fg = c.Grey4, italic = ItalicOption },
+		NonText = { fg = c.Grey4, },
+		DiffDelete = { fg = c.Grey4, },
+		diffRemoved = { fg = c.Red1 },
 	LineNr = { fg = c.Grey4 },
 		LineNrAbove = { link = 'LineNr' },
 		LineNrBelow = { link = 'LineNr' },
 	CursorLineNr = { fg = c.Grey6 },
-	Number = { fg = c.Red1, },
+	Number = { fg = c.Red1 },
 		Character = { link = 'Number' },
 		Float = { link = 'Number' },
 		Tag = { link = 'Number' },
@@ -115,24 +117,24 @@ M.yankhighlight = {
 	YankHighlight = { fg = c.Black, bg = c.Grey7 },
 }
 M.statusline = {
-	StatuslineTextMain = { fg = c.Grey8, bg = c.Black },
-	StatuslineTextAccent = { fg = c.Grey5, bg = c.Black },
-	StatuslineModeNormal = { fg = c.Grey8, bg = c.Black },
-	StatuslineModeInsert = { fg = c.Grey8, bg = c.Black },
-	StatuslineModeVisual = { fg = c.Grey8, bg = c.Black },
-	StatuslineModeReplace = { fg = c.Grey8, bg = c.Black },
-	StatuslineModeCommand = { fg = c.Grey8, bg = c.Black },
-	StatuslineModeSelect = { fg = c.Grey8, bg = c.Black },
-	StatuslineFiletype = { fg = c.Black, bg = c.Grey8 },
-	StatuslineSaved = { fg = c.Grey8, bg = c.Black },
-	StatuslineNotSaved = { fg = c.Red1, bg = c.Black },
-	StatuslineReadOnly = { fg = c.Grey8, bg = c.Black },
-	StatuslineLspOn = { fg = c.Grey8, bg = c.Black },
-	StatuslineLspError = { fg = c.Grey8, bg = c.Black },
-	StatuslineLspWarning = { fg = c.Grey8, bg = c.Black },
-	StatuslineLspInfo = { fg = c.Grey8, bg = c.Black },
-	StatuslineLspHint = { fg = c.Grey8, bg = c.Black },
-	StatuslineHarpoon = { fg = c.Grey8, bg = c.Black },
+	StatuslineTextMain = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineTextAccent = { fg = c.Grey5, bg = c.ui4 },
+	StatuslineModeNormal = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineModeInsert = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineModeVisual = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineModeReplace = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineModeCommand = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineModeSelect = { fg = c.Grey8, bg = c.ui4, bold = BoldOption },
+	StatuslineFiletype = { fg = c.Grey5, bg = c.ui4 },
+	StatuslineSaved = { fg = c.Green, bg = c.ui4 },
+	StatuslineNotSaved = { fg = c.Red1, bg = c.ui4 },
+	StatuslineReadOnly = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineLspOn = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineLspError = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineLspWarning = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineLspInfo = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineLspHint = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineHarpoon = { fg = c.Magenta, bg = c.ui4 },
 }
 M.treesitter = {
 -- IDENTIFIERS
@@ -245,7 +247,7 @@ M.treesitter = {
 	['@conceal'] = {},
 }
 M.telescope = {
-	TelescopeNormal = {}, -- Default Link: Normal
+	TelescopeNormal = { fg = c.Grey6 }, -- Default Link: Normal
 		TelescopeBorder = { link = 'TelescopeNormal' },
 			TelescopePromptBorder = { link = 'TelescopeBorder' },
 			TelescopeResultsBorder = { link = 'TelescopeBorder' },
@@ -262,10 +264,10 @@ M.telescope = {
 	TelescopeSelection = { link = 'Visual' }, -- Default Link: Visual
 		TelescopeSelectionCaret = { link = 'TelescopeSelection' },
 	TelescopeMultiIcon = {}, -- Default Link: Identifier
-	TelescopeMultiSelection = { bold = BoldOption }, -- Default Link: Type
+	TelescopeMultiSelection = { fg = c.Grey8, bold = BoldOption }, -- Default Link: Type
 	TelescopeMatching = { fg = c.Grey5 }, -- Default Link: Special
 	TelescopePromptPrefix = {}, -- Default Link: Identifier
-	TelescopePromptCounter = {}, -- Default Link: NonText
+	TelescopePromptCounter = { link = 'TelescopeResultsComment' }, -- Default Link: NonText
 	TelescopeResultsComment = { fg = c.Grey4 }, -- Default Link: Comment
 	TelescopeResultsNumber = {}, -- Default Link: Number
 	TelescopeResultsIdentifier = {}, -- Default Link: Identifier
@@ -280,6 +282,8 @@ M.telescope = {
 	TelescopeResultsConstant = {}, -- Default Link: Constant
 	TelescopeResultsClass = {}, -- Default Link: Function
 	TelescopeResultsDiffChange = {}, -- Default Link: DiffChange
+	TelescopeResultsDiffUntracked = {}, -- Default Link: NonText
+	TelescopeResultsDiffDelete = {}, -- Default Link: DiffDelete
 	TelescopeResultsSpecialComment = {}, -- Default Link: SpecialComment
 	TelescopePreviewSticky = {}, -- Default Link: Keyword
 	TelescopePreviewHyphen = {}, -- Default Link: NonText
@@ -294,8 +298,6 @@ M.telescope = {
 	TelescopePreviewPipe = {}, -- Default Link: Constant
 	TelescopePreviewMatch = {}, -- Default Link: Search
 	TelescopePreviewLine = {}, -- Default Link: Visual
-	TelescopeResultsDiffUntracked = {}, -- Default Link: NonText
-	TelescopeResultsDiffDelete = {}, -- Default Link: DiffDelete
 	TelescopePreviewSize = {}, -- Default Link: String
 	TelescopePreviewDate = {}, -- Default Link: Directory
 	TelescopePreviewGroup = {}, -- Default Link: Constant

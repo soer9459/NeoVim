@@ -1,39 +1,39 @@
--- help topics to check all the highlights:
--- :h group-name
--- :h highlight-groups
--- :h treesitter-highlight-groups
--- :h diagnostic-highlights
--- :h lsp-highlight
--- :h lsp-semantic-highlight
--- :h expr-highlight
---
--- Better HSLUV and Blend Functions
+-- :h group-name, highlight-groups, treesitter-highlight-groups,
+-- :h diagnostic-highlights, lsp-highlight, lsp-semantic-highlight, expr-highlight
+-- Mason and other plugin highlights are still initiated when using simple theme. They should be overwritten somehow? Or maybe not?
 
-BackgroundColor = "#1a1b26" -- Default
--- BackgroundColor = "#191724" -- Rose-Pine Default
--- BackgroundColor = "#181818"
--- BackgroundColor = "#000000"
+BaseColor = HSL(235, 19, 13)  -- Blue
+-- BaseColor = HSL(20, 15, 12)  -- Brown
+-- BaseColor = HSL(20, 10, 12)  -- Brown Desaturated
+-- BaseColor = HSL(100, 15, 12)  -- Green
+-- BaseColor = HSL(0, 0, 12)  -- Grey
+-- BaseColor = HSL(0, 0, 0)  -- Black
+-- BaseColor = HSL(249, 22, 12)  -- Rose-Pine Default
+-- BaseColor = HSL(0, 0, 6) -- Custom
 
 BoldOption = true
 ItalicOption = true
 UnderlineOption = true
 
-local highlightcheck = true
+local highlightcheck = false
 
--- Mason and other plugin highlights are still initiated when using simple theme. They should be overwritten somehow? Or maybe not?
-local theme = "rose-pine"
-	-- "" (no theme)                statusline                  simplered
+local theme = "simplered"
+	-- "" (no theme)
+	-- basics
+	-- simplered
 	-- rose-pine
 local colorscheme = ""
-	-- "" (no colorscheme)          vim (old default)           default (neovim default)
+	-- "" (no colorscheme)
+	-- vim (old default)
+	-- default (neovim default)
 
 -------------------------------------------------------------------
 ---------------------------- SET THEME ----------------------------
 -------------------------------------------------------------------
 
 -- CLEAR INIT
-vim.cmd("syntax clear")
-vim.cmd("highlight clear")
+vim.api.nvim_command("syntax clear")
+vim.api.nvim_command("highlight clear")
 
 -- CLEAR HIGHLIGHT GROUPS
 if highlightcheck then
@@ -48,7 +48,7 @@ end
 
 -- SET DEFAULT COLORSCHEME
 if colorscheme ~= "" then
-	vim.cmd("colorscheme " .. colorscheme)
+	vim.api.nvim_command("colorscheme " .. colorscheme)
 end
 
 -- CLEAR LSP HIGHLIGHTS
@@ -56,8 +56,8 @@ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do vim.api.nvi
 
 -- INITIATE FUNCTIONS
 local path = vim.fn.stdpath('config') .. "/lua/user/theme/"
-dofile(path .. "functions/hsluv.lua")
 dofile(path .. "functions/blend.lua")
+dofile(path .. "functions/hsl.lua")
 
 -- APPLY HIGHLIGHT GROUPS AND COLORS
 if theme == "" then

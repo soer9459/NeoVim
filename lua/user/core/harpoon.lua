@@ -13,7 +13,7 @@ function HarpoonSet(harpoon)
 		end
 	end
 	HarpoonBuffers[harpoon] = vim.fn.bufnr()
-	vim.cmd("redrawstatus")
+	vim.api.nvim_command("redrawstatus")
 end
 
 function HarpoonDefine(harpoon)
@@ -43,7 +43,7 @@ function HarpoonDelete(harpoon)
 		print("Harpoon " .. harpoon .. " not set")
 	else
 		HarpoonBuffers[harpoon] = nil
-		vim.cmd('redrawstatus')
+		vim.api.nvim_command('redrawstatus')
 	end
 end
 

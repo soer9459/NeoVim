@@ -67,5 +67,5 @@ function SymPy()
 		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})
 	end
 	local input = vim.fn.input("Enter SymPy command: ")
-	vim.cmd('read !python -c "from sympy import *; from sympy.abc import *; print(latex(' .. input .. '))"')
+	vim.api.nvim_command('read !python -c "from sympy import *; from sympy.abc import *; print(latex(' .. input .. '))"')
 end

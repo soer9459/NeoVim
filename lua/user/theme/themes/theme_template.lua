@@ -1,30 +1,27 @@
 local M = {}
 
-M.colors = {
-	-- BACKGROUND COLOR
-	BackgroundColor = BackgroundColor,
-	-- TERMINAL COLORS
-	Black = "",
-	Red = "",
-	Green = "",
-	Blue = "",
-	Yellow = "",
-	Magenta = "",
-	Cyan = "",
-	White = "",
-	BrightBlack = "",
-	BrightRed = "",
-	BrightGreen = "",
-	BrightYellow = "",
-	BrightBlue = "",
-	BrightMagenta = "",
-	BrightCyan = "",
-	BrightWhite = "",
-	-- OTHER COLORS
-	Beige = "",
-}
-
+M.colors = {}
 local c = M.colors
+
+-- BACKGROUND COLOR
+c.BG = BaseColor
+-- TERMINAL COLORS
+c.Black = ""
+c.Red = ""
+c.Green = ""
+c.Blue = ""
+c.Yellow = ""
+c.Magenta = ""
+c.Cyan = ""
+c.White = ""
+c.BrightBlack = ""
+c.BrightRed = ""
+c.BrightGreen = ""
+c.BrightYellow = ""
+c.BrightBlue = ""
+c.BrightMagenta = ""
+c.BrightCyan = ""
+c.BrightWhite = ""
 
 M.basic = {
 	SpecialKey = {},

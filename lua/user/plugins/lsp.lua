@@ -23,7 +23,7 @@ return {
 							Lua = {
 								runtime = { version = "Lua 5.1" },
 								diagnostics = {
-									globals = { "vim", "bit" },
+									globals = { "vim", "bit", "HSL", "HSL_H", "HSL_S", "HSL_L", "BackgroundColor" },
 								},
 							}
 						}

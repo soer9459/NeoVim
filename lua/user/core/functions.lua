@@ -1,13 +1,16 @@
 local current_buf = nil
+local current_cursor = nil
 function ToggleNetRW()
 	if vim.bo.filetype ~= 'netrw' then
 		current_buf = vim.api.nvim_get_current_buf()
-		vim.cmd("Ex")
+		current_cursor = vim.api.nvim_win_get_cursor(0)
+		vim.api.nvim_command("Ex")
 	else
 		if current_buf then
-			vim.cmd("buffer " .. current_buf)
+			vim.api.nvim_command("buffer " .. current_buf)
+			vim.api.nvim_win_set_cursor(0, current_cursor)
 		else
-			vim.cmd("bdel")
+			vim.api.nvim_command("bdel")
 		end
 	end
 end
@@ -34,17 +37,17 @@ function ToggleLanguage()
 	function(choice)
 		if choice == 'Off' then
 			vim.o.spell = false
-			vim.cmd("redrawstatus")
+			vim.api.nvim_command("redrawstatus")
 			print("Spelling off")
 		elseif choice == 'Danish' then
 			vim.api.nvim_command("set spelllang=da")
 			vim.o.spell = true
-			vim.cmd("redrawstatus")
+			vim.api.nvim_command("redrawstatus")
 			print("Language set to Danish")
 		elseif choice == 'English' then
 			vim.api.nvim_command("set spelllang=en")
 			vim.o.spell = true
-			vim.cmd("redrawstatus")
+			vim.api.nvim_command("redrawstatus")
 			print("Language set to English")
 		else
 			return

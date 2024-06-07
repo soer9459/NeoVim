@@ -1,37 +1,34 @@
 local M = {}
 
-M.colors = {
-	-- BACKGROUND COLOR
-	BackgroundColor = BackgroundColor,
-	-- TERMINAL COLORS
-	Black = "#0D0C12",
-	Red = "#EB6F92",
-	Green = "#9ED979",
-	Blue = "#31748F",
-	Yellow = "#F6C177",
-	Magenta = "#C4A7E7",
-	Cyan = "#9CCFD8",
-	White = "#E0DEF4",
-	BrightBlack = "#505769",
-	BrightRed = "#B4637A",
-	BrightGreen = "#7DAC60",
-	BrightYellow = "#c78e3e",
-	BrightBlue = "#286983",
-	BrightMagenta = "#907AA9",
-	BrightCyan = "#56949F",
-	BrightWhite = "#9EA6BC",
-	-- OTHER COLORS
-	Beige = "#EBBCBA",
-	Surface = HSB(BackgroundColor, 0, 0, 0.04),
-	Overlay = HSB(BackgroundColor, 0, 0, 0.08),
-	Muted = HSB(BackgroundColor, 0, -0.1, 0.36),
-	Subtle = HSB(BackgroundColor, 0, -0.1, 0.52),
-	HighlightMed = HSB(BackgroundColor, 0, -0.1, 0.185),
-	HighlightHigh = HSB(BackgroundColor, 0, -0.15, 0.26),
-	None = 'NONE',
-}
-
+M.colors = {}
 local c = M.colors
+
+c.BG            = BaseColor
+c.Black         = HSL( 250,  20,   6 )
+c.Red           = HSL( 343,  76,  68 )
+c.Green         = HSL(  97,  56,  66 )
+c.Blue          = HSL( 197,  49,  38 )
+c.Yellow        = HSL(  35,  88,  72 )
+c.Magenta       = HSL( 267,  57,  78 )
+c.Cyan          = HSL( 189,  43,  73 )
+c.White         = HSL( 245,  50,  91 )
+c.BrightBlack   = HSL( 223,  14,  36 )
+c.BrightRed     = HSL( 343,  35,  55 )
+c.BrightGreen   = HSL(  97,  31,  53 )
+c.BrightYellow  = HSL(  35,  55,  51 )
+c.BrightBlue    = HSL( 197,  53,  34 )
+c.BrightMagenta = HSL( 268,  21,  57 )
+c.BrightCyan    = HSL( 189,  30,  48 )
+c.BrightWhite   = HSL( 224,  18,  68 )
+c.Beige         = HSL(   2,  55,  83 )
+c.Surface       = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 3 )
+c.Overlay       = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 6 )
+c.Muted         = HSL(HSL_H(c.BG), HSL_S(c.BG) - 5, HSL_L(c.BG) + 20 )
+c.Subtle        = HSL(HSL_H(c.BG), HSL_S(c.BG) - 5, HSL_L(c.BG) + 52 )
+c.HighlightMed  = HSL(HSL_H(c.BG), HSL_S(c.BG) - 5, HSL_L(c.BG) + 12 )
+c.HighlightHigh = HSL(HSL_H(c.BG), HSL_S(c.BG) - 10, HSL_L(c.BG) + 20 )
+c.hlStatusline  = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 15 )
+c.None          = 'NONE'
 
 M.basics = {
 	SpecialKey = { fg = c.Cyan },
@@ -43,8 +40,8 @@ M.basics = {
 	Directory = { fg = c.Cyan, bold = BoldOption },
 	ErrorMsg = { fg = c.Red, bold = BoldOption },
 	IncSearch = { link = "CurSearch" },
-	Search = { fg = c.BackgroundColor, bg = c.White },
-		CurSearch = { fg = c.BackgroundColor, bg = c.Yellow },
+	Search = { fg = c.BG, bg = c.White },
+		CurSearch = { fg = c.BG, bg = c.Yellow },
 		QuickFixLine = { link = 'Search' },
 		Substitute = { link = "IncSearch" },
 	MoreMsg = { fg = c.Magenta },
@@ -60,17 +57,17 @@ M.basics = {
 	Question = { fg = c.Yellow },
 	StatusLine = { fg = c.Subtle, bg = c.Surface }, --Default BG: Surface
 		MsgSeparator = { link = 'StatusLine' },
-	StatusLineNC = { fg = c.Muted, bg = Blend(c.Surface, c.BackgroundColor, 0.6) },
+	StatusLineNC = { fg = c.Muted, bg = Blend(c.Surface, c.BG, 0.6) },
 	Title = { fg = c.Cyan, bold = BoldOption },
 	Visual = { bg = c.HighlightMed },
 	VisualNC = {},
 	WarningMsg = { fg = c.Yellow, bold = BoldOption },
 	WildMenu = { link = "IncSearch" },
 	Folded = { fg = c.White, bg = c.Surface },
-	DiffAdd = { bg = Blend(c.Cyan, c.BackgroundColor, 0.2) },
-	DiffChange = { bg = Blend(c.Beige, c.BackgroundColor, 0.2) },
-	DiffDelete = { bg = Blend(c.Red, c.BackgroundColor, 0.2) },
-	DiffText = { bg = Blend(c.Beige, c.BackgroundColor, 0.2) },
+	DiffAdd = { bg = Blend(c.Cyan, c.BG, 0.2) },
+	DiffChange = { bg = Blend(c.Beige, c.BG, 0.2) },
+	DiffDelete = { bg = Blend(c.Red, c.BG, 0.2) },
+	DiffText = { bg = Blend(c.Beige, c.BG, 0.2) },
 	Conceal = { bg = "NONE" },
 	SpellBad = { sp = c.Subtle, undercurl = true },
 	SpellCap = { sp = c.Subtle, undercurl = true },
@@ -91,23 +88,23 @@ M.basics = {
 	CursorColumn = { bg = c.Overlay },
 	CursorLine = { bg = c.Overlay },
 	ColorColumn = { bg = c.Surface },
-	NormalNC = { fg = c.White }, --bg = c.BackgroundColor removed
+	NormalNC = { fg = c.White }, --bg = c.BG removed
 	MsgArea = {},
 	FloatBorder = {},
 	WinBar = { fg = c.Subtle, bg = c.Surface },
-	WinBarNC = { fg = c.Muted, bg = Blend(c.Surface, c.BackgroundColor, 0.6) },
+	WinBarNC = { fg = c.Muted, bg = Blend(c.Surface, c.BG, 0.6) },
 	Cursor = { fg = c.White, bg = c.HighlightHigh },
 	FloatTitle = { link = "Directory" },
 	lCursor = {},
-	Normal = { fg = c.White }, --bg = c.BackgroundColor removed
+	Normal = { fg = c.White }, --bg = c.BG removed
 		VertSplit = { fg = c.Muted },
 			WinSeparator = { link = 'VertSplit' },
 	FloatShadow = {},
 	FloatShadowThrough = {},
 	RedrawDebugNormal = {},
-	RedrawDebugClear = { fg = c.BackgroundColor, bg = c.Yellow },
-	RedrawDebugComposed = { fg = c.BackgroundColor, bg = c.Blue },
-	RedrawDebugRecompose = { fg = c.BackgroundColor, bg = c.Red },
+	RedrawDebugClear = { fg = c.BG, bg = c.Yellow },
+	RedrawDebugComposed = { fg = c.BG, bg = c.Blue },
+	RedrawDebugRecompose = { fg = c.BG, bg = c.Red },
 	Error = { fg = c.Red },
 	Todo = {},
 	Constant = { fg = c.Yellow },
@@ -156,23 +153,23 @@ M.basics = {
 		SpecialComment = { fg = c.Magenta },
 		Debug = { fg = c.Beige },
 	DiagnosticError = { fg = c.Red },
-		DiagnosticVirtualTextError = { fg = c.Red, bg = Blend(c.Red, c.BackgroundColor, 0.1) },
+		DiagnosticVirtualTextError = { fg = c.Red, bg = Blend(c.Red, c.BG, 0.1) },
 		DiagnosticFloatingError = { link = 'DiagnosticError' },
 		DiagnosticSignError = { link = 'DiagnosticError' },
 	DiagnosticWarn = { fg = c.Yellow },
-		DiagnosticVirtualTextWarn = { fg = c.Yellow, bg = Blend(c.Yellow, c.BackgroundColor, 0.1) },
+		DiagnosticVirtualTextWarn = { fg = c.Yellow, bg = Blend(c.Yellow, c.BG, 0.1) },
 		DiagnosticFloatingWarn = { link = 'DiagnosticWarn' },
 		DiagnosticSignWarn = { link = 'DiagnosticWarn' },
 	DiagnosticInfo = { fg = c.Cyan },
-		DiagnosticVirtualTextInfo = { fg = c.Cyan, bg = Blend(c.Cyan, c.BackgroundColor, 0.1) },
+		DiagnosticVirtualTextInfo = { fg = c.Cyan, bg = Blend(c.Cyan, c.BG, 0.1) },
 		DiagnosticFloatingInfo = { link = 'DiagnosticInfo' },
 		DiagnosticSignInfo = { link = 'DiagnosticInfo' },
 	DiagnosticHint = { fg = c.White },
-		DiagnosticVirtualTextHint = { fg = c.White, bg = Blend(c.White, c.BackgroundColor, 0.1) },
+		DiagnosticVirtualTextHint = { fg = c.White, bg = Blend(c.White, c.BG, 0.1) },
 		DiagnosticFloatingHint = { link = 'DiagnosticHint' },
 		DiagnosticSignHint = { link = 'DiagnosticHint' },
 	DiagnosticOk = { fg = c.Green },
-		DiagnosticVirtualTextOk = { fg = c.Green, bg = Blend(c.Green, c.BackgroundColor, 0.1) },
+		DiagnosticVirtualTextOk = { fg = c.Green, bg = Blend(c.Green, c.BG, 0.1) },
 		DiagnosticFloatingOk = { link = 'DiagnosticOk' },
 		DiagnosticSignOk = { link = 'DiagnosticOk' },
 	DiagnosticUnderlineError = { sp = c.Red, undercurl = true },
@@ -186,7 +183,7 @@ M.basics = {
 		--['@lsp.type.comment'] = {},
 	Underlined = { fg = c.Magenta, underline = UnderlineOption },
 	--['@lsp'] = {},
-	MatchParen = { fg = c.Blue, bg = Blend(c.Blue, c.BackgroundColor, 0.25) },
+	MatchParen = { fg = c.Blue, bg = Blend(c.Blue, c.BG, 0.25) },
 	Ignore = {},
 -- NEWLY ADDED
 	Added = {},
@@ -281,8 +278,8 @@ M.treesitter = {
 		['@comment.documentation'] = { link = '@comment' },
 		['@comment.error'] = { fg = c.Red },
 		['@comment.warning'] = { fg = c.Yellow },
-		['@comment.todo'] = { fg = c.Beige, bg = Blend(c.Beige, c.BackgroundColor, 0.2) },
-		['@comment.note'] = { fg = c.Blue, bg = Blend(c.Blue, c.BackgroundColor, 0.2) },
+		['@comment.todo'] = { fg = c.Beige, bg = Blend(c.Beige, c.BG, 0.2) },
+		['@comment.note'] = { fg = c.Blue, bg = Blend(c.Blue, c.BG, 0.2) },
 -- MARKUP
 	['@markup'] = {},
 		['@markup.strong'] = { bold = BoldOption },
@@ -304,12 +301,12 @@ M.treesitter = {
 		['@markup.raw'] = { link = '@markup' },
 			['@markup.raw.block'] = { link = '@markup.raw' },
 		['@markup.list'] = { fg = c.White },
-			['@markup.list.checked'] = { fg = c.Cyan, bg = Blend(c.Cyan, c.BackgroundColor, 0.1) },
+			['@markup.list.checked'] = { fg = c.Cyan, bg = Blend(c.Cyan, c.BG, 0.1) },
 			['@markup.list.unchecked'] = { link = '@markup.list' },
 -- DIFF
-	['@diff.plus'] = { fg = c.Cyan, bg = Blend(c.Cyan, c.BackgroundColor, 0.2) },
-	['@diff.minus'] = { fg = c.Red, bg = Blend(c.Red, c.BackgroundColor, 0.2) },
-	['@diff.delta'] = { bg = Blend(c.Beige, c.BackgroundColor, 0.2) },
+	['@diff.plus'] = { fg = c.Cyan, bg = Blend(c.Cyan, c.BG, 0.2) },
+	['@diff.minus'] = { fg = c.Red, bg = Blend(c.Red, c.BG, 0.2) },
+	['@diff.delta'] = { bg = Blend(c.Beige, c.BG, 0.2) },
 -- TAG
 	['@tag'] = { link = 'Tag' }, -- Default Link: Tag
 		['@tag.builtin'] = { link = '@tag' },
@@ -323,8 +320,8 @@ M.treesitter = {
 	['@conceal'] = { link = "Conceal" },
 }
 M.telescope = {
-	TelescopeNormal = { bg = c.Surface }, -- Default link: Normal (default rose-pine surface)
-		TelescopeBorder = { fg = c.Muted, bg = c.Surface }, -- (default rose-pine surface)
+	TelescopeNormal = { bg = c.BG }, -- Default link: Normal (default bg: rose-pine surface)
+		TelescopeBorder = { fg = c.Subtle, bg = c.BG }, -- (default bg: rose-pine surface)
 			TelescopePromptBorder = { link = 'TelescopeBorder' },
 			TelescopeResultsBorder = { link = 'TelescopeBorder' },
 			TelescopePreviewBorder = { link = 'TelescopeBorder' },
@@ -396,24 +393,24 @@ M.yankhighlight = {
 	YankHighlight = { fg = c.Black, bg = c.White },
 }
 M.statusline = {
-	StatuslineTextMain = { fg = c.White, bg = c.Black },
-	StatuslineTextAccent = { fg = c.BrightBlack, bg = c.Black },
-	StatuslineModeNormal = { fg = c.White, bg = c.BrightBlue },
-	StatuslineModeInsert = { fg = c.White, bg = c.BrightCyan },
-	StatuslineModeVisual = { fg = c.White, bg = c.BrightYellow },
-	StatuslineModeReplace = { fg = c.White, bg = c.BrightRed },
-	StatuslineModeCommand = { fg = c.White, bg = c.BrightBlack },
-	StatuslineModeSelect = { fg = c.White, bg = c.BrightMagenta },
-	StatuslineFiletype = { fg = c.White, bg = c.Black },
-	StatuslineSaved = { fg = c.White, bg = c.BrightGreen },
-	StatuslineNotSaved = { fg = c.White, bg = c.BrightRed },
-	StatuslineReadOnly = { fg = c.White, bg = c.BrightYellow },
-	StatuslineLspOn = { fg = c.BrightWhite, bg = c.Black },
-	StatuslineLspError = { fg = c.Red, bg = c.Black },
-	StatuslineLspWarning = { fg = c.Yellow, bg = c.Black },
-	StatuslineLspInfo = { fg = c.Blue, bg = c.Black },
-	StatuslineLspHint = { fg = c.White, bg = c.Black },
-	StatuslineHarpoon = { fg = c.White, bg = c.BrightMagenta },
+	StatuslineTextMain = { fg = c.White, bg = c.hlStatusline },
+	StatuslineTextAccent = { fg = c.BrightWhite, bg = c.hlStatusline },
+	StatuslineModeNormal = { fg = c.White, bg = c.hlStatusline },
+	StatuslineModeInsert = { fg = c.White, bg = c.hlStatusline },
+	StatuslineModeVisual = { fg = c.White, bg = c.hlStatusline },
+	StatuslineModeReplace = { fg = c.White, bg = c.hlStatusline },
+	StatuslineModeCommand = { fg = c.White, bg = c.hlStatusline },
+	StatuslineModeSelect = { fg = c.White, bg = c.hlStatusline },
+	StatuslineFiletype = { fg = c.White, bg = c.hlStatusline },
+	StatuslineSaved = { fg = c.Green, bg = c.hlStatusline },
+	StatuslineNotSaved = { fg = c.Red, bg = c.hlStatusline },
+	StatuslineReadOnly = { fg = c.Yellow, bg = c.hlStatusline },
+	StatuslineLspOn = { fg = c.BrightWhite, bg = c.hlStatusline },
+	StatuslineLspError = { fg = c.Red, bg = c.hlStatusline },
+	StatuslineLspWarning = { fg = c.Yellow, bg = c.hlStatusline },
+	StatuslineLspInfo = { fg = c.Blue, bg = c.hlStatusline },
+	StatuslineLspHint = { fg = c.White, bg = c.hlStatusline },
+	StatuslineHarpoon = { fg = c.Magenta, bg = c.hlStatusline },
 }
 
 return M
