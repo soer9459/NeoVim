@@ -24,22 +24,14 @@ function ToggleNetRW()
 end
 vim.api.nvim_command('command! ToggleNetRW lua ToggleNetRW()')
 
--- NETRW SETTINGS
+-- NETRW SETTINGS AND KEYMAPS
 vim.api.nvim_create_autocmd('FileType', {
-	group = 'AutoCommands',
+	group = 'netrw',
 	pattern = 'netrw',
 	callback = function()
 		vim.o.nu = true
 		vim.o.rnu = true
 		vim.opt_local.winbar = " File Browser (NETRW)"
-	end
-})
-
--- KEYMAPS
-vim.api.nvim_create_autocmd('FileType', {
-	group = 'netrw',
-	pattern = 'netrw',
-	callback = function()
 		vim.keymap.set('n', 'e', '<CMD>Ex ~<CR>', { noremap = true, silent = true, buffer = true })
 		vim.keymap.set('n', 'w', '<CMD>Ex ' .. vim.fn.getcwd() .. '<CR>', {noremap = true, silent = true, buffer = true })
 		vim.keymap.set('n', '<C-C>', '<CMD>ToggleNetRW<CR>', { noremap = true, silent = true, buffer = true })
