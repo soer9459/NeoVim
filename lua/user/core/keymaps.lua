@@ -73,7 +73,6 @@ vim.g.maplocalleader = " "
 	map('x', '<leader>r', ':s/', nrmp)
 -- s (Search Telescope)
 	map('n', '<leader>st', '<CMD>Telescope<CR>', opts)
-	-- map('n', '<leader>sp', '<CMD>Telescope file_browser path=%:p:h select_buffer=true<CR>', opts)
 	map('n', '<leader>sp', '<CMD>ToggleNetRW<CR>', opts)
 	map('n', '<leader>sf', '<CMD>Telescope find_files<CR>', opts)
 	map('n', '<leader>sc', '<CMD>lua require("telescope.builtin").find_files({ prompt_title = "NeoVim Configuration", cwd = vim.fn.stdpath("config") })<CR>', opts)
