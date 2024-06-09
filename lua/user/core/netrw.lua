@@ -2,7 +2,7 @@ vim.api.nvim_create_augroup('netrw', { clear = true })
 local current_buf = nil
 
 -- KEEP TRACK OF LAST BUFFER
-vim.api.nvim_create_autocmd({'BufEnter', 'BufAdd'}, {
+vim.api.nvim_create_autocmd('BufWinEnter', {
 	group = 'netrw',
 	callback = function()
 		if vim.bo.filetype ~= 'netrw' then
