@@ -2,8 +2,6 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local nrmp = { noremap = true }
 
-map('n', '<leader>f', '<CMD>FzfLua<CR>', opts)
-
 -- NEW FEATURES
 	map({'n', 'i', 'x'}, '<C-S>', '<CMD>w<CR>', opts)
 	map('n', '<C-J>', '<CMD>bprevious<CR>', opts)
