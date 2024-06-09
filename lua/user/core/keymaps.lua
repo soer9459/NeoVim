@@ -2,8 +2,10 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local nrmp = { noremap = true }
 
+map('n', '<leader>f', '<CMD>FzfLua<CR>', opts)
+
 -- NEW FEATURES
-	map({'n', 'i', 'x'}, '<C-S>', '<CMD>update<CR>', opts)
+	map({'n', 'i', 'x'}, '<C-S>', '<CMD>w<CR>', opts)
 	map('n', '<C-J>', '<CMD>bprevious<CR>', opts)
 	map('n', '<C-K>', '<CMD>bnext<CR>', opts)
 	map('x', '<S-K>', ':m \'<-2<cr>gv', opts)
@@ -73,8 +75,8 @@ vim.g.maplocalleader = " "
 	map('x', '<leader>r', ':s/', nrmp)
 -- s (Search Telescope)
 	map('n', '<leader>st', '<CMD>Telescope<CR>', opts)
-	map('n', '<leader>sp', '<CMD>Telescope file_browser path=%:p:h select_buffer=true<CR>', opts)
-	-- map('n', '<leader>sp', '<CMD>ToggleNetRW<CR>', opts)
+	-- map('n', '<leader>sp', '<CMD>Telescope file_browser path=%:p:h select_buffer=true<CR>', opts)
+	map('n', '<leader>sp', '<CMD>ToggleNetRW<CR>', opts)
 	map('n', '<leader>sf', '<CMD>Telescope find_files<CR>', opts)
 	map('n', '<leader>sc', '<CMD>lua require("telescope.builtin").find_files({ prompt_title = "NeoVim Configuration", cwd = vim.fn.stdpath("config") })<CR>', opts)
 	map('n', '<leader>sb', '<CMD>Telescope buffers<CR>', opts)

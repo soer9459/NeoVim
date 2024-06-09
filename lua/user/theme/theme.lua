@@ -7,9 +7,10 @@ BaseColor = HSL(235, 19, 13)  -- Blue
 -- BaseColor = HSL(20, 10, 12)  -- Brown Desaturated
 -- BaseColor = HSL(100, 15, 12)  -- Green
 -- BaseColor = HSL(0, 0, 12)  -- Grey
+-- BaseColor = HSL(0, 0, 8)  -- DarkGrey
 -- BaseColor = HSL(0, 0, 0)  -- Black
 -- BaseColor = HSL(249, 22, 12)  -- Rose-Pine Default
--- BaseColor = HSL(0, 0, 6) -- Custom
+-- BaseColor = HSL(0, 0, 10) -- Custom
 
 BoldOption = true
 ItalicOption = true

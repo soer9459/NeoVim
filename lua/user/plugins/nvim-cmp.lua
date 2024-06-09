@@ -2,7 +2,6 @@ return {
 	'hrsh7th/nvim-cmp',
 	dependencies = {
 		'hrsh7th/cmp-buffer',
-		'hrsh7th/cmp-path',
 		'hrsh7th/cmp-cmdline',
 		'hrsh7th/cmp-nvim-lua',
 		'hrsh7th/cmp-nvim-lsp',
@@ -18,7 +17,6 @@ return {
 			snippet = {
 				expand = function(args)
 					require('luasnip').lsp_expand(args.body)
-					-- vim.snippet.expand(args.body)
 				end
 			},
 			completion = { completeopt = 'menu, menuone, noinsert, noselect' },
@@ -40,7 +38,6 @@ return {
 				{ name = 'nvim_lsp' },
 				{ name = 'nvim_lua' },
 				{ name = 'buffer', keyword_length=3, },
-				{ name = 'path' },
 			},
 			formatting = {
 				format = function(entry, vim_item)
@@ -48,7 +45,6 @@ return {
 						buffer = "BUF",
 						nvim_lsp = "LSP",
 						nvim_lua = "NVIM",
-						path = "PATH",
 						luasnip = "SNIP",
 						cmdline = "CMD",
 					}
@@ -59,7 +55,7 @@ return {
 		}
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline{ },
-			completion = { autocomplete = false },
+			-- completion = { autocomplete = false },
 			sources = {
 				{ name = 'cmdline' },
 			},

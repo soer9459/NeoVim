@@ -2,7 +2,6 @@ return {
 	'nvim-telescope/telescope.nvim',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
-		'nvim-telescope/telescope-file-browser.nvim',
 		'debugloop/telescope-undo.nvim',
 		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 	},
@@ -13,16 +12,12 @@ return {
 		local w_pct = 0.80
 		local w_limit = 75
 		local standard_setup = {
-			borderchars = {
-				--   N    E    S    W   NW   NE   SE   SW
-					'─', '│', '─', '│', '┌', '┐', '┘', '└'
-			},
+			borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
 			preview = { hide_on_startup = true },
 			layout_strategy = 'vertical', -- HORIZONTAL, VERTICAL, FLEX
 			layout_config = {
 				vertical = {
 					mirror = true,
-					-- anchor = 'E',
 					prompt_position = 'top',
 					width = function(_, cols, _)
 						return math.min( math.floor( w_pct * cols ), w_limit )
@@ -69,7 +64,6 @@ return {
 		}
 		ts.setup {
 			defaults = vim.tbl_extend('error', standard_setup, {
-				-- results_title = '',
 				sorting_strategy = 'ascending',
 				path_display = { "filename_first" }, -- trunctate or filename_first
 				mappings = {
@@ -90,29 +84,6 @@ return {
 				},
 			},
 			extensions = {
-				file_browser =  {
-					hijack_netrw = true,
-					initial_mode = 'normal',
-					hide_parent_dir = false,
-					hidden = {
-						file_browser = false,
-						folder_browser = false,
-					},
-					display_stat = {},
-					mappings = {
-						n = {
-							['-'] = ts.extensions.file_browser.actions.goto_parent_dir,
-							['<BS>'] = ts.extensions.file_browser.actions.goto_parent_dir,
-							-- KEYBIND TO OPEN MULTI SELECTED FILES
-						},
-						i = {
-							-- ['<C-d>'] = ts.extensions.file_browser.actions.remove, -- Find another mappning, since C-d is down in preview
-							['<C-y>'] = ts.extensions.file_browser.actions.copy,
-							['<C-r>'] = ts.extensions.file_browser.actions.rename,
-							-- ['<C-m>'] = ts.extensions.file_browser.actions.move, -- Find another mapping, since C-m is CR
-						},
-					}
-				},
 				undo = vim.tbl_extend('error', fullscreen_setup, {
 					diff_context_lines = 4,
 					preview_title = "Diff",
@@ -132,7 +103,6 @@ return {
 				})
 			}
 		}
-		ts.load_extension('file_browser')
 		ts.load_extension('fzf')
 		ts.load_extension('undo')
 	end,

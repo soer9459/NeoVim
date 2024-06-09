@@ -1,21 +1,3 @@
-local current_buf = nil
-local current_cursor = nil
-function ToggleNetRW()
-	if vim.bo.filetype ~= 'netrw' then
-		current_buf = vim.api.nvim_get_current_buf()
-		current_cursor = vim.api.nvim_win_get_cursor(0)
-		vim.api.nvim_command("Ex")
-	else
-		if current_buf then
-			vim.api.nvim_command("buffer " .. current_buf)
-			vim.api.nvim_win_set_cursor(0, current_cursor)
-		else
-			vim.api.nvim_command("bdel")
-		end
-	end
-end
-vim.api.nvim_command('command! ToggleNetRW lua ToggleNetRW()')
-
 function ToggleFoldcolumn()
 	if vim.wo.foldcolumn ~= "0" then
 		vim.wo.foldcolumn = "0"

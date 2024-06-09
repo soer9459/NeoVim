@@ -55,9 +55,13 @@ local function Mode()
 		["niI"] = "INS-NOR",
 	}
 	local current_mode = vim.api.nvim_get_mode().mode
-	-- return ModeColor() .. '  ' .. modes[current_mode] .. ' ' .. _Spacer(0)
-	return ModeColor() .. ' ' .. modes[current_mode] .. ' ' .. _Spacer(0)
-	-- return current_mode
+	local value = ""
+	if modes[current_mode] == nil then
+		value = "UNKNOWN"
+	else
+		value = modes[current_mode]
+	end
+	return ModeColor() .. ' ' .. value .. ' ' .. _Spacer(0)
 end
 
 local function Path()
@@ -210,5 +214,7 @@ vim.api.nvim_create_augroup('Statusline', { clear = true })
 vim.api.nvim_create_autocmd({'WinEnter', 'BufEnter'}, {
 	group = 'Statusline',
 	pattern = '*',
-	command = 'setlocal statusline=%!v:lua.Statusline()'
+	callback = function()
+		vim.o.statusline = '%!v:lua.Statusline()'
+	end
 })
