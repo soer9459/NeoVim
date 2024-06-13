@@ -9,6 +9,8 @@ return {
 		'saadparwaiz1/cmp_luasnip',
 	},
 	config = function()
+		-- vim.keymap.set({'i', 's'}, '<C-L>', '<CMD>lua vim.snippet.jump(1)<CR>', {silent = true})
+		-- vim.keymap.set({'i', 's'}, '<C-J>', '<CMD>lua vim.snippet.jump(-1)<CR>', {silent = true})
 		local cmp = require('cmp')
 		cmp.setup {
 			experimental = {
@@ -17,6 +19,7 @@ return {
 			snippet = {
 				expand = function(args)
 					require('luasnip').lsp_expand(args.body)
+					-- vim.snippet.expand(args.body)
 				end
 			},
 			completion = { completeopt = 'menu, menuone, noinsert, noselect' },

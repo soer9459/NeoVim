@@ -91,8 +91,8 @@ M.basics = {
 	NormalNC = { fg = c.White }, --bg = c.BG removed
 	MsgArea = {},
 	FloatBorder = {},
-	WinBar = { fg = c.Subtle, bg = c.Surface },
-	WinBarNC = { fg = c.Muted, bg = Blend(c.Surface, c.BG, 0.6) },
+	WinBar = { link = 'StatuslineTextMain' },
+	WinBarNC = { link = 'WinBarNC' },
 	Cursor = { fg = c.White, bg = c.HighlightHigh },
 	FloatTitle = { link = "Directory" },
 	lCursor = {},

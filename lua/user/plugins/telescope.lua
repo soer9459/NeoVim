@@ -14,7 +14,7 @@ return {
 		local standard_setup = {
 			borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
 			preview = { hide_on_startup = true },
-			layout_strategy = 'vertical', -- HORIZONTAL, VERTICAL, FLEX
+			layout_strategy = 'vertical',
 			layout_config = {
 				vertical = {
 					mirror = true,
@@ -23,7 +23,7 @@ return {
 						return math.min( math.floor( w_pct * cols ), w_limit )
 					end,
 					height = function(_, _, rows)
-						return math.floor( rows * h_pct )
+					return math.floor( rows * h_pct )
 					end,
 					preview_cutoff = 10,
 					preview_height = 0.4,
@@ -33,7 +33,7 @@ return {
 		local fullscreen_setup = {
 			borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
 			preview = { hide_on_startup = false },
-			layout_strategy = 'flex', -- HORIZONTAL, VERTICAL, FLEX
+			layout_strategy = 'flex',
 			layout_config = {
 				flex = { flip_columns = 100 },
 				horizontal = {
@@ -65,7 +65,7 @@ return {
 		ts.setup {
 			defaults = vim.tbl_extend('error', standard_setup, {
 				sorting_strategy = 'ascending',
-				path_display = { "filename_first" }, -- trunctate or filename_first
+				path_display = { "filename_first" },
 				mappings = {
 					n = {
 						['o'] = require('telescope.actions.layout').toggle_preview,

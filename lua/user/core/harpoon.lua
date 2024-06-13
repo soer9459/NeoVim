@@ -1,11 +1,5 @@
 HarpoonBuffers = {}
 
-vim.api.nvim_command('command! -nargs=1 HarpoonDefine lua HarpoonDefine(<f-args>)')
-vim.api.nvim_command('command! -nargs=1 HarpoonSwitch lua HarpoonSwitch(<f-args>)')
-vim.api.nvim_command('command! -nargs=1 HarpoonDelete lua HarpoonDelete(<f-args>)')
-vim.api.nvim_command('command! HarpoonPrint lua HarpoonPrint()')
-vim.api.nvim_command('command! HarpoonDeleteAll lua HarpoonDeleteAll()')
-
 function HarpoonSet(harpoon)
 	for key, value in pairs(HarpoonBuffers) do
 		if value == vim.fn.bufnr() then

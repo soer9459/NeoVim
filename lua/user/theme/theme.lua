@@ -1,7 +1,3 @@
--- :h group-name, highlight-groups, treesitter-highlight-groups,
--- :h diagnostic-highlights, lsp-highlight, lsp-semantic-highlight, expr-highlight
--- Mason and other plugin highlights are still initiated when using simple theme. They should be overwritten somehow? Or maybe not?
-
 BaseColor = HSL(235, 19, 13)  -- Blue
 -- BaseColor = HSL(20, 15, 12)  -- Brown
 -- BaseColor = HSL(20, 10, 12)  -- Brown Desaturated

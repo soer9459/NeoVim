@@ -15,6 +15,7 @@ c.Grey6 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 74)
 c.Grey7 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 82)
 c.Grey8 = HSL(HSL_H(c.BG), HSL_S(c.BG) / 1.5, 93)
 c.Green = HSL(130, 30, 52)
+c.Yellow = HSL(30, 50, 60)
 c.Magenta = HSL(280, 50, 70)
 c.Red1 = HSL(0, 58, 52)
 c.Red2 = HSL(0, 100, 42)
@@ -26,6 +27,7 @@ c.ui3 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 10)
 c.ui4 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 15)
 
 M.basics = {
+	netrwMarkFile = { fg = c.Magenta },
 	Normal = { fg = c.Grey6 },
 		NormalNC = { link = 'Normal' },
 		MsgArea = { link = 'Normal' },
@@ -105,6 +107,7 @@ M.basics = {
 	CursorLine = { bg = c.ui2 },
 	StatusLine = { link = 'StatuslineTextMain' },
 	WinBar = { link = 'StatuslineTextMain' },
+		WinBarNC = { link = 'WinBar' },
 		Cursor = { link = 'StatusLine' },
 	StatusLineNC = { reverse = true, fg = c.Grey3, bg = c.Black },
 	Visual = { bg = c.ui3 },
@@ -129,7 +132,7 @@ M.statusline = {
 	StatuslineFiletype = { fg = c.Grey5, bg = c.ui4 },
 	StatuslineSaved = { fg = c.Green, bg = c.ui4 },
 	StatuslineNotSaved = { fg = c.Red1, bg = c.ui4 },
-	StatuslineReadOnly = { fg = c.Grey8, bg = c.ui4 },
+	StatuslineReadOnly = { fg = c.Yellow, bg = c.ui4 },
 	StatuslineLspOn = { fg = c.Grey8, bg = c.ui4 },
 	StatuslineLspError = { fg = c.Grey8, bg = c.ui4 },
 	StatuslineLspWarning = { fg = c.Grey8, bg = c.ui4 },

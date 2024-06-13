@@ -74,7 +74,7 @@ local function Path()
 end
 
 local function Filename()
-	local filename = vim.fn.expand('%:t')
+	local filename = vim.fn.expand('%:~:t')
 	local path = vim.fn.expand('%:~:.:h')
 	local higroup = '%#StatuslineTextMain#'
 	if filename == '' then

@@ -1,8 +1,3 @@
-vim.api.nvim_command('command! LatexCompile lua LatexCompile()')
-vim.api.nvim_command('command! LatexClean lua LatexClean()')
-vim.api.nvim_command('command! LatexView lua LatexView()')
-vim.api.nvim_command('command! SymPy lua SymPy()')
-
 function LatexCompile()
 	if vim.bo.filetype ~= 'tex' then
 		return vim.api.nvim_echo({{'✘ Not a LaTeX document', 'DiagnosticError'}}, true, {})

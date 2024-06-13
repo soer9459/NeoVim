@@ -7,7 +7,6 @@ function ToggleFoldcolumn()
 		print("FoldColumn on")
 	end
 end
-vim.api.nvim_command('command! ToggleFoldcolumn lua ToggleFoldcolumn()')
 
 function ToggleLanguage()
 	vim.ui.select({ 'Off', 'Danish', 'English' }, {
@@ -36,4 +35,3 @@ function ToggleLanguage()
 		end
 	end)
 end
-vim.api.nvim_command('command! ToggleLanguage lua ToggleLanguage()')

@@ -10,12 +10,12 @@ return {
 			enable_autosnippets = true
 		}
 		-- KEYMAPS
-		vim.keymap.set({'i', 's'}, '<C-L>', function() ls.jump( 1) end, {silent = true})
+		vim.keymap.set({'i', 's'}, '<C-L>', function() ls.jump(1) end, {silent = true})
 		vim.keymap.set({'i', 's'}, '<C-J>', function() ls.jump(-1) end, {silent = true})
 		-- SNIPPETS
 		ls.add_snippets('tex', {
-			ps('**', '^{ $1 }'),
 			ps('_', '_{ $1 }'),
+			ps('**', '^{ $1 }'),
 			ps('*', '\\cdot '),
 			ps('frac', '\\frac{ $1 }{ $2 }'),
 			ps('dif', '\\frac{\\partial $1}{\\partial $2}'),
