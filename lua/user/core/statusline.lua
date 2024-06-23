@@ -67,8 +67,11 @@ end
 local function Path()
 	local path = vim.fn.expand('%:~:.:h')
 	local higroup = '%#StatuslineTextAccent#'
+	local max_width = 30
 	if path == '.' or path == '' then
 		return ''
+	elseif #path > max_width then
+		path = "…" .. string.sub(path, - max_width + 2)
 	end
 	return _Spacer(1) .. higroup .. path .. '/'
 end

@@ -1,3 +1,13 @@
+function GetHSLFromHEX()
+	local color = vim.fn.expand('<cword>')
+	local hexPattern = "^%x%x%x%x%x%x$"
+	if string.match(color, hexPattern) then
+        print("Hue: " .. HSL_H('#' .. color) .. " - Saturation: " .. HSL_S('#' .. color) .. " - Lightness: " .. HSL_L("#" .. color))
+    else
+		print("Not a hex color code")
+    end
+end
+
 function ToggleFoldcolumn()
 	if vim.wo.foldcolumn ~= "0" then
 		vim.wo.foldcolumn = "0"

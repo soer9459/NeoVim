@@ -27,6 +27,9 @@ c.ui3 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 10)
 c.ui4 = HSL(HSL_H(c.BG), HSL_S(c.BG), HSL_L(c.BG) + 15)
 
 M.basics = {
+	netrwPlain = { fg = c.Grey6 },
+	netrwDir = { fg = c.Grey8, bold = BoldOption },
+	netrwClassify = { fg = c.Grey8, bold = BoldOption },
 	netrwMarkFile = { fg = c.Magenta },
 	Normal = { fg = c.Grey6 },
 		NormalNC = { link = 'Normal' },

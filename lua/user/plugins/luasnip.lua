@@ -5,14 +5,11 @@ return {
 		local ls = require('luasnip')
 		local ps = ls.parser.parse_snippet
 		ls.config.set_config {
-			history = true,
 			updateevents = "TextChanged,TextChangedI",
-			enable_autosnippets = true
+			enable_autosnippets = true,
 		}
-		-- KEYMAPS
 		vim.keymap.set({'i', 's'}, '<C-L>', function() ls.jump(1) end, {silent = true})
 		vim.keymap.set({'i', 's'}, '<C-J>', function() ls.jump(-1) end, {silent = true})
-		-- SNIPPETS
 		ls.add_snippets('tex', {
 			ps('_', '_{ $1 }'),
 			ps('**', '^{ $1 }'),
@@ -29,6 +26,7 @@ return {
 			ps('ref', '\\ref{$1}'),
 			ps('eqref', '\\eqref{$1}'),
 			ps('eq', '\\begin{equation}\n\t$1\n\\end{equation}'),
+			ps('temp', '\\documentclass{article}\n\\usepackage{amsmath}\n\\usepackage{graphicx}\n\n\\title{$1}\n\\author{${2:Søren Skytte Justesen}}\n\n\\begin{document}\n\n\\maketitle\n\n$0\n\n\\end{document}'),
 		})
 	end
 }

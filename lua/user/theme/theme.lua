@@ -1,28 +1,28 @@
-BaseColor = HSL(235, 19, 13)  -- Blue
--- BaseColor = HSL(20, 15, 12)  -- Brown
--- BaseColor = HSL(20, 10, 12)  -- Brown Desaturated
--- BaseColor = HSL(100, 15, 12)  -- Green
--- BaseColor = HSL(0, 0, 12)  -- Grey
--- BaseColor = HSL(0, 0, 8)  -- DarkGrey
--- BaseColor = HSL(0, 0, 0)  -- Black
--- BaseColor = HSL(249, 22, 12)  -- Rose-Pine Default
+BaseColor = "#1a1b26" -- Blue
+-- BaseColor = "#1f1f2e" -- Blue Alt
+-- BaseColor = "#231d1a" -- Brown
+-- BaseColor = "#211d1b" -- Brown Desaturated
+-- BaseColor = "#1d231a" -- Green
+-- BaseColor = "#1e1e1e" -- Grey
+-- BaseColor = "#141414" -- DarkGrey
+-- BaseColor = "#000000" -- Black
+-- BaseColor = "#191724" -- Rose-Pine Default
 -- BaseColor = HSL(0, 0, 10) -- Custom
+
+-- local theme = ""
+-- local theme = "basics"
+local theme = "simplered"
+-- local theme = "rose-pine"
+
+-- local colorscheme = ""
+-- local colorscheme = "vim" -- Vim default
+local colorscheme = "default" -- NeoVim default
+
+local highlightcheck = false
 
 BoldOption = true
 ItalicOption = true
 UnderlineOption = true
-
-local highlightcheck = false
-
-local theme = "simplered"
-	-- "" (no theme)
-	-- basics
-	-- simplered
-	-- rose-pine
-local colorscheme = ""
-	-- "" (no colorscheme)
-	-- vim (old default)
-	-- default (neovim default)
 
 -------------------------------------------------------------------
 ---------------------------- SET THEME ----------------------------
@@ -33,12 +33,10 @@ vim.api.nvim_command("syntax clear")
 vim.api.nvim_command("highlight clear")
 
 -- CLEAR HIGHLIGHT GROUPS
-if highlightcheck then
-	for _, group in ipairs(vim.fn.getcompletion("", "highlight")) do
+for _, group in ipairs(vim.fn.getcompletion("", "highlight")) do
+	if highlightcheck then
 		vim.api.nvim_set_hl(0, group, { fg = 'Green', bg = 'Pink' })
-	end
-else
-	for _, group in ipairs(vim.fn.getcompletion("", "highlight")) do
+	else
 		vim.api.nvim_set_hl(0, group, {})
 	end
 end
@@ -49,18 +47,14 @@ if colorscheme ~= "" then
 end
 
 -- CLEAR LSP HIGHLIGHTS
-for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do vim.api.nvim_set_hl(0, group, {}) end
-
--- INITIATE FUNCTIONS
-local path = vim.fn.stdpath('config') .. "/lua/user/theme/"
-dofile(path .. "functions/blend.lua")
-dofile(path .. "functions/hsl.lua")
+-- Also down-prioritized in options.lua
+ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+ 	vim.api.nvim_set_hl(0, group, {})
+ end
 
 -- APPLY HIGHLIGHT GROUPS AND COLORS
-if theme == "" then
-	return
-else
-	local M = dofile(path .. "themes/" .. theme .. ".lua")
+if theme ~= "" then
+	local M = dofile(vim.fn.stdpath('config') .. "/lua/user/theme/themes/" .. theme .. ".lua")
 	for tablename, table in pairs(M) do
 		if tablename ~= "colors" then
 			for highlight, options in pairs(table) do

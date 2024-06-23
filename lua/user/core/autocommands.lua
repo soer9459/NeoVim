@@ -7,7 +7,17 @@ augroup('AutoCommands', { clear = true })
 autocmd('TextYankPost', {
 	group = 'AutoCommands',
 	callback = function()
-		vim.highlight.on_yank{ higroup = 'YankHighlight', timeout = 200 }
+		vim.highlight.on_yank{ higroup = 'YankHighlight', timeout = 100 }
+	end
+})
+
+-- OPEN HELP AT THE TOP
+autocmd('BufWinEnter', {
+	group = 'AutoCommands',
+	callback = function()
+		if vim.bo.filetype == 'help' then
+			vim.api.nvim_command('wincmd K')
+		end
 	end
 })
 
